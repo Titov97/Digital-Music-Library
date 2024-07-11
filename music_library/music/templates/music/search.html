@@ -1,0 +1,14 @@
+{% extends 'music/base.html' %}
+
+{% block content %}
+<h2>Search Artists</h2>
+<input type="text" id="search" name="search" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(function() {
+        $("#search").autocomplete({
+            source: "/search-artists/"
+        });
+    });
+</script>
+{% endblock %}

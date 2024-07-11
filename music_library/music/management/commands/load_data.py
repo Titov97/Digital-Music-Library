@@ -1,5 +1,3 @@
-# music/management/commands/load_data.py
-
 import json
 from django.core.management.base import BaseCommand
 from music.models import Artist, Album, Song

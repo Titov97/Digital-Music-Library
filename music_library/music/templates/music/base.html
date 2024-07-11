@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Library</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Music Library</h1>
+        <nav>
+            <a href="{% url 'artist_list' %}">Home</a>
+        </nav>
+    </header>
+    <main>
+        <form id="search-form" action="{% url 'search_artists' %}" method="get">
+            <input type="text" id="search-box" name="q" placeholder="Search for artists...">
+            <button type="submit">Search</button>
+        </form>
+        {% block content %}{% endblock %}
+    </main>
+    <script>
+        $(document).ready(function() {
+            $("#search-box").on("input", function() {
+                var query = $(this).val();
+                if (query.length > 2) {
+                    $.ajax({
+                        url: "{% url 'search_artists' %}",
+                        data: {
+                            'q': query
+                        },
+                        success: function(data) {
+                            $("#autocomplete-results").empty();
+                            data.forEach(function(item) {
+                                $("#autocomplete-results").append('<li><a href="/artist/' + item.id + '">' + item.name + '</a></li>');
+                            });
+                        }
+                    });
+                } else {
+                    $("#autocomplete-results").empty();
+                }
+            });
+        });
+    </script>
+    <ul id="autocomplete-results"></ul>
+</body>
+</html>
