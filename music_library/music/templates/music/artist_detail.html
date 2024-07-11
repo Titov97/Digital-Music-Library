@@ -1,0 +1,11 @@
+{% extends 'music/base.html' %}
+
+{% block content %}
+<h2>{{ artist.name }}</h2>
+<h3>Albums</h3>
+<ul>
+    {% for album in artist.album_set.all %}
+        <li><a href="{% url 'album_detail' album.id %}">{{ album.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
